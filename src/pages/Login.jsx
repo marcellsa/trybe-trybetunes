@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { createUser } from '../services/userAPI';
 import LoadingPage from './LoadingPage';
 
@@ -7,14 +7,15 @@ const MIN_USERNAME_LENGTH = 3;
 
 class Login extends Component {
   state = {
-    userName: '',
+    username: '',
     loggedIn: false,
+    shouldRedirect: false,
   };
 
-  handleUserNameChange = (event) => {
+  handleUsernameChange = (event) => {
     const { value } = event.target;
     this.setState({
-      userName: value,
+      username: value,
     });
   };
 
@@ -22,15 +23,16 @@ class Login extends Component {
     this.setState({
       loggedIn: true,
     }, async () => {
-      const { userName } = this.state;
-      await createUser({ name: userName });
-      const { history } = this.props;
-      history.push('/search');
+      const { username } = this.state;
+      await createUser({ name: username });
+      this.setState({
+        shouldRedirect: true,
+      });
     });
   };
 
   render() {
-    const { userName, loggedIn } = this.state;
+    const { username, loggedIn, shouldRedirect } = this.state;
 
     return (
       <div data-testid="page-login">
@@ -42,32 +44,27 @@ class Login extends Component {
                 <input
                   data-testid="login-name-input"
                   type="text"
-                  name="login-name-input"
+                  name="username"
                   id="login-name-input"
-                  value={ userName }
-                  onChange={ this.handleUserNameChange }
+                  value={ username }
+                  onChange={ this.handleUsernameChange }
                 />
               </label>
 
               <button
                 data-testid="login-submit-button"
                 type="button"
-                disabled={ userName.length < MIN_USERNAME_LENGTH }
+                disabled={ username.length < MIN_USERNAME_LENGTH }
                 onClick={ this.handleButton }
               >
                 Entrar
               </button>
             </form>
           )}
+        { shouldRedirect && <Redirect to="/search" /> }
       </div>
     );
   }
 }
-
-Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};
 
 export default Login;

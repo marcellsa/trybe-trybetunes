@@ -26,9 +26,9 @@ class Header extends Component {
     const { user, response } = this.state;
     return (
       <header data-testid="header-component">
-        <h2 data-testid="header-user-name">
-          { response ? <LoadingPage /> : user}
-        </h2>
+        { response ? <LoadingPage />
+          : (<span data-testid="header-user-name">{user}</span>)}
+
         <nav>
           <Link to="/search" data-testid="link-to-search">Search </Link>
           <Link to="/favorites" data-testid="link-to-favorites">Favorites </Link>
