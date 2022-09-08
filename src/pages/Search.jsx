@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import AlbumCard from '../components/AlbumCard';
 import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import LoadingPage from './LoadingPage';
@@ -26,6 +26,7 @@ class Search extends Component {
     const { artist } = this.state;
     this.setState({ isLoading: true });
     const searchedAlbums = await searchAlbumsAPI(artist);
+    console.log(searchedAlbums);
     this.setState({
       albums: searchedAlbums,
       artist: '',
@@ -74,19 +75,8 @@ class Search extends Component {
               {' '}
               { artistSearched }
             </p>
-            { albums.map((album) => (
+            <AlbumCard albums={ albums } />
 
-              <div key={ album.collectionId }>
-                <img src={ album.artworkUrl100 } alt={ album.collectionName } />
-                <p>{ album.collectionName }</p>
-                <span>{ album.artistName }</span>
-                {/* <Link
-                  to={ `/album/${album.collectionId}` }
-                  data-testid={ `link-to-album-${collectionId}` }
-                /> */}
-              </div>
-
-            ))}
           </div>
         )}
       </div>
