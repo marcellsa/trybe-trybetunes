@@ -26,7 +26,6 @@ class Search extends Component {
     const { artist } = this.state;
     this.setState({ isLoading: true });
     const searchedAlbums = await searchAlbumsAPI(artist);
-    console.log(searchedAlbums);
     this.setState({
       albums: searchedAlbums,
       artist: '',

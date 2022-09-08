@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class AlbumCard extends Component {
   render() {
     const { albums } = this.props;
-    // const { collectionId, collectionName, artistName, artworkUrl100 } = albums;
+
     if (albums.length === 0) {
       return (<p>Nenhum álbum foi encontrado</p>);
     }
@@ -22,7 +22,6 @@ class AlbumCard extends Component {
               data-testid={ `link-to-album-${album.collectionId}` }
             />
           </div>
-
         ))}
       </div>
     );
