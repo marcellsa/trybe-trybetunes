@@ -20,7 +20,12 @@ class AlbumCard extends Component {
             <Link
               to={ `/album/${album.collectionId}` }
               data-testid={ `link-to-album-${album.collectionId}` }
-            />
+            >
+              {' '}
+              { album.collectionName }
+              {' '}
+
+            </Link>
           </div>
         ))}
       </div>
